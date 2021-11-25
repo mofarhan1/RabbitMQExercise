@@ -8,20 +8,25 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class Consumer {
-@RabbitListener(queues = "queue.A")
-            private void receive(Message message) throws Exception{
-    try {
-        long timeStamp = System.currentTimeMillis()-message.getTime_ms();
-        log.info("Message received from Queue queue.A->{}",timeStamp);
-        if(timeStamp>=1000){
-            throw new Exception("Exception message");
+    @RabbitListener(queues = "queue.A")
+    private void receive(Message message) throws Exception {
+        try {
+            long timeStamp = System.currentTimeMillis() - message.getTime_ms();
+            log.info("Message received from Queue queue.A->{}", timeStamp);
+            // (timeStamp > 1000)   så ikke gøre noget da jeg læser direkte fra køen
 
-        }
+           if(timeStamp <=1000 & timeStamp % 2==0 ){} // gem i db
+            else{
 
-    }catch (Exception e){
+                throw  new Exception(); // jeg kaster  fejl fordi jeg vil gerne have beskeden i køen igen
+           }
 
 
-    }
+                }catch(Exception e){
+            log.info("timestamp of msg was an uneven number so msg needs to be requeue");
+
+
+                }
 
 
     /*
@@ -33,14 +38,10 @@ Hvis timestamp er under 1 min gammelt og sekundviser på timestamp er et ulige t
      */
 
 
+            }
 
 
-
-     }
-
-
-
-}
+        }
 
 
 
