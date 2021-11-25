@@ -22,8 +22,7 @@ private RabbitTemplate rabbitTemplate;
 private DirectExchange directExchange;
 @PostMapping("/post")
 public String send(@RequestBody Message message){
-    // enten send med Request et eller andet for at få timestamp eller hardcore noget time in i den beskded
-    //message.setTime_ms(System.currentTimeMillis());
+
 message.setTime_ms(System.currentTimeMillis());
 
     rabbitTemplate.convertAndSend(directExchange.getName(),"routing.A",message);

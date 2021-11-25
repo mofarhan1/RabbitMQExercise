@@ -52,8 +52,5 @@ public class RabbitMQConfig {
 
 
 
-    /*public static void main(String[] args) throws InterruptedException {
-        SpringApplication.run(RabbitMQConfig.class, args).close();
-    }*/
 
 }
