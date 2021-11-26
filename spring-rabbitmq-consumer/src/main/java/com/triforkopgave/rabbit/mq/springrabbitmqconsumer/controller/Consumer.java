@@ -24,21 +24,21 @@ public class Consumer {
            if(timeStamp <=1000 & timeStamp % 2==0 ){} // gem i mongodb
             else {
 
+               log.info("timestamp of msg was an less than 1 minute and uneven  so msg needs to be requeue");
+
                message.setTime_ms(System.currentTimeMillis());   // set new timeStamp
 
-               GetResponse gr = channel.basicGet("some.queue", false);
+               GetResponse gr = channel.basicGet("queue.A", false);
 
                channel.basicNack(gr.getEnvelope().getDeliveryTag(), false, true);
 
            }
-            
-
-
                 }catch(Exception e){
+
+            log.info(e.toString());
 
         }
 
-            log.info("timestamp of msg was an less than 1 minute and uneven  so msg needs to be requeue");
 
                 }
 
