@@ -1,5 +1,6 @@
 package com.triforkopgave.rabbit.mq.springrabbitmqproducer.configuaration;
 
+import com.rabbitmq.client.Channel;
 import com.triforkopgave.rabbit.mq.springrabbitmqproducer.model.Message;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
@@ -15,7 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.handler.annotation.Header;
 
-import java.nio.channels.Channel;
+
 
 
 @Configuration
@@ -44,6 +45,7 @@ public class RabbitMQConfig {
 
     @Bean
     MessageConverter messageConverter(){
+
         return new Jackson2JsonMessageConverter();
     }
 

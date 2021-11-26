@@ -18,21 +18,21 @@ public class Consumer {
     private void receive(Message message, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag)  throws IOException { {
         try {
             long timeStamp = System.currentTimeMillis() - message.getTime_ms();
-            log.info("Message received from Queue queue.A->{}", timeStamp);
+            log.info("Message received from Queue queue.A->{}", message );
             // if (timeStamp > 1000)   then we do nothing
 
            if(timeStamp <=1000 & timeStamp % 2==0 ){} // gem i mongodb
-            else {
+            if(timeStamp <=1000 & (timeStamp %2)!=0  ){
 
-               log.info("timestamp of msg was an less than 1 minute and uneven  so msg needs to be requeue");
+                log.info("timestamp of msg was an less than 1 minute and uneven  so msg needs to be requeue");
 
-               message.setTime_ms(System.currentTimeMillis());   // set new timeStamp
+                message.setTime_ms(System.currentTimeMillis());   // set new timeStamp
 
-               GetResponse gr = channel.basicGet("queue.A", false);
+                GetResponse gr = channel.basicGet("queue.A", false);
 
-               channel.basicNack(gr.getEnvelope().getDeliveryTag(), false, true);
+                channel.basicNack(gr.getEnvelope().getDeliveryTag(), false, true);
+            }
 
-           }
                 }catch(Exception e){
 
             log.info(e.toString());
