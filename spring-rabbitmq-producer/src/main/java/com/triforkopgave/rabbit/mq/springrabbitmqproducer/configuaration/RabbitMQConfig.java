@@ -16,9 +16,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.handler.annotation.Header;
 
-
-
-
 @Configuration
 public class RabbitMQConfig {
 

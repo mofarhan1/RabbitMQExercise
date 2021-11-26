@@ -1,0 +1,6 @@
+spring:
+  data:
+    mongodb:
+      database: Message
+    host: my-rabbit
+    port: 27017

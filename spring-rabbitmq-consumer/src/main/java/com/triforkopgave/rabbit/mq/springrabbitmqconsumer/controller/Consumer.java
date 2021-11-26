@@ -31,6 +31,7 @@ public class Consumer {
                 GetResponse gr = channel.basicGet("queue.A", false);
 
                 channel.basicNack(gr.getEnvelope().getDeliveryTag(), false, true);
+
             }
 
                 }catch(Exception e){
