@@ -13,23 +13,24 @@ public class Consumer {
         try {
             long timeStamp = System.currentTimeMillis() - message.getTime_ms();
             log.info("Message received from Queue queue.A->{}", timeStamp);
-            // (timeStamp > 1000)   så ikke gøre noget da jeg læser direkte fra køen
+            // if (timeStamp > 1000)   then we do nothing
 
-           if(timeStamp <=1000 & timeStamp % 2==0 ){} // gem i db
+           if(timeStamp <=1000 & timeStamp % 2==0 ){} // gem i mongodb
             else{
 
-                throw  new Exception(); // jeg kaster  fejl fordi jeg vil gerne have beskeden i køen igen
+                message.setTime_ms(System.currentTimeMillis());   // set new timeStamp
+                throw  new Exception(); // throw error to requeue the msg.
            }
 
 
                 }catch(Exception e){
-            log.info("timestamp of msg was an uneven number so msg needs to be requeue");
 
+            log.info("timestamp of msg was an less than 1 minute and uneven  so msg needs to be requeue");
 
                 }
 
 
-    /*
+    /* opgaven: 
     Producer app: Producere en besked med en timestamp i et gentage loop.
 Consumer app:
 Tag besked af køen. Hvis beskedens timestamp er over 1 minut gammel – så smid den væk. (ikke gem den i db)
