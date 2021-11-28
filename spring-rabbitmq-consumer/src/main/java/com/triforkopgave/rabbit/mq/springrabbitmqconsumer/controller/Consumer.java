@@ -14,14 +14,16 @@ import java.io.IOException;
 @Component
 @Slf4j
 public class Consumer {
+
     @RabbitListener(queues = "queue.A")
     private void receive(Message message, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag)  throws IOException { {
         try {
+            MessageController msgController = new MessageController();
             long timeStamp = System.currentTimeMillis() - message.getTime_ms();
             log.info("Message received from Queue queue.A->{}", message );
             // if (timeStamp > 1000)   then we do nothing
 
-           if(timeStamp <=1000 & timeStamp % 2==0 ){} // gem i mongodb
+           if(timeStamp <=1000 & timeStamp % 2==0 ){ msgController.saveMessage(message);} // gem i mongodb
             if(timeStamp <=1000 & (timeStamp %2)!=0  ){
 
                 log.info("timestamp of msg was an less than 1 minute and uneven  so msg needs to be requeue");
