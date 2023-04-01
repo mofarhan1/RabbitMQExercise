@@ -2,5 +2,5 @@ spring:
   data:
     mongodb:
       database: Message
-    host: my-rabbit
+    host: rabbitmqexercisemongodb
     port: 27017
